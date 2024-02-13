@@ -2,17 +2,26 @@ import 'dart:math';
 
 import 'package:expense_tracker/models/expense_model.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
+import 'package:google_fonts/google_fonts.dart';
 
 class ExpenseItem extends StatelessWidget {
-  ExpenseItem(this.expense, {super.key}) : containerColor = categoryContainerColors[expense.category]!,
+  ExpenseItem(this.expense, {super.key})
+      : containerColor = categoryContainerColors[expense.category]!,
         icon = categoryIcons[expense.category]!,
-        iconColor = categoryIconColors[expense.category]!;
+        iconColor = categoryIconColors[expense.category]!,
+        iconName = categoryNames[expense.category]!,
+        payIcon = categoryPayIcons[expense.categoryPay]!,
+        payIconColor = categoryPayIconsColors[expense.categoryPay]!;
 
   final ExpenseModel expense;
   final Color containerColor;
   final IconData icon;
   final Color iconColor;
-  
+  final String iconName;
+  final IconData payIcon;
+  final Color payIconColor;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -27,8 +36,8 @@ class ExpenseItem extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(14),
                     child: Container(
-                      padding: const EdgeInsets.all(10),
-                      color:containerColor,
+                      padding: const EdgeInsets.all(8),
+                      color: containerColor,
                       child: Icon(
                         icon,
                         color: iconColor,
@@ -41,10 +50,21 @@ class ExpenseItem extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(expense.title),
-                      const SizedBox(height: 3),
                       Text(
-                        expense.category.name.toString(),
+                        expense.title,
+                        style: GoogleFonts.lato(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 4,),
+                      Text(
+                        expense.formattedDate,
+                        style: GoogleFonts.lato(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w300,
+                        
+                        ),
                       ),
                     ],
                   ),
@@ -52,10 +72,17 @@ class ExpenseItem extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text('\u{20B9} ${expense.amount.toStringAsFixed(2)}'),
-                      const SizedBox(height: 5),
-                      Text(
-                        expense.formattedDate,
+                      Text('- \u{20B9}${expense.amount.toStringAsFixed(2)}',
+                      style: GoogleFonts.lato(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                        ),),
+                      const SizedBox(height: 1),
+                      Icon(
+              
+                        payIcon,
+                        color: payIconColor,
+                        size: 18,
                       )
                     ],
                   )

@@ -17,12 +17,13 @@ class ExpenseList extends StatelessWidget {
       itemBuilder: (ctx, index) => ExpenseItem(expenses[index]),
       separatorBuilder: (ctx, index) => 
       const Divider(
-        height: 5,
+        height: 10,
         thickness: 0.14,
         color: Colors.grey,
-        endIndent: 40,
-        indent: 40,
+        endIndent: 46,
+        indent: 46,
       ),
+      
     );
   }
 }
