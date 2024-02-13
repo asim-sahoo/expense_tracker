@@ -43,6 +43,7 @@ class _NewExpenseState extends State<NewExpense> {
           TextField(
             decoration: const InputDecoration(
               hintText: 'Title',
+              hintStyle: TextStyle(color: Colors.grey,fontSize: 15),
               filled: true,
               fillColor: Color.fromARGB(255, 235, 235, 235),
               contentPadding:
@@ -77,7 +78,7 @@ class _NewExpenseState extends State<NewExpense> {
             children: [
               const SizedBox(width: 8),
               Text(
-                'Expense Name',
+                'Amount',
                 style: GoogleFonts.lato(
                   color: const Color.fromARGB(255, 131, 131, 131),
                 ),
@@ -87,7 +88,8 @@ class _NewExpenseState extends State<NewExpense> {
           const SizedBox(height: 13),
           TextField(
             decoration: const InputDecoration(
-              hintText: 'Title',
+              hintText: '\u{20B9}',
+              hintStyle: TextStyle(color: Colors.grey,fontSize: 15),
               filled: true,
               fillColor: Color.fromARGB(255, 235, 235, 235),
               contentPadding:
