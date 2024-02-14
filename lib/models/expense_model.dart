@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
+import 'dart:convert';
 
 final formatter = DateFormat('dd MMM, yyyy');
 
@@ -42,11 +42,11 @@ const categoryIcons = {
 
 const categoryIconColors = {
   Category.food: Color.fromARGB(255, 250, 153, 153),
-  Category.travel: Color.fromARGB(255, 139, 255, 139),
+  Category.travel: Color.fromARGB(255, 97, 230, 125),
   Category.work: Color.fromARGB(255, 158, 158, 255),
   Category.shopping: Color.fromARGB(255, 255, 136, 255),
   Category.medical: Color.fromARGB(255, 253, 197, 13),
-  Category.miscellaneous: Color.fromARGB(255, 37, 255, 255),
+  Category.miscellaneous: Color.fromARGB(255, 47, 155, 255),
 };
 
 const categoryNames = {
@@ -81,8 +81,29 @@ class ExpenseModel {
   final String title;
   final double amount;
   final DateTime date;
-  final Category category;
-  final CategoryPay categoryPay;
+  final Category? category;
+  final CategoryPay? categoryPay;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'amount': amount,
+      'date': date.toIso8601String(),
+      'category': category?.index,
+      'categoryPay': categoryPay?.index,
+    };
+  }
+
+  // Method to create ExpenseModel from JSON
+  factory ExpenseModel.fromJson(Map<String, dynamic> json) {
+    return ExpenseModel(
+      title: json['title'],
+      amount: json['amount'],
+      date: DateTime.parse(json['date']),
+      category: json['category'] != null ? Category.values[json['category']] : null,
+      categoryPay: json['categoryPay'] != null ? CategoryPay.values[json['categoryPay']] : null,
+    );
+  }
 
   get formattedDate {
     return formatter.format(date);
