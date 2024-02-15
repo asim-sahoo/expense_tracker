@@ -7,6 +7,7 @@ void main() {
       theme: ThemeData(useMaterial3: true),
       debugShowCheckedModeBanner: false,
       home: const Expenses()
+      
     ),
   );
 }

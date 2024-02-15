@@ -42,7 +42,7 @@ class ExpenseList extends StatelessWidget {
             BarChartRodData(
               toY: entry.value,
               color: categoryIconColors[entry.key] ?? Colors.blue,
-              width: 25,
+              width: 27,
             ),
           ],
           // showingTooltipIndicators: [0],
@@ -54,12 +54,15 @@ class ExpenseList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(9),
             child: Card(
+              elevation: 1.5,
               child: Padding(
-                padding: const EdgeInsets.all(10),
+                padding: const EdgeInsets.all(18),
                 child: AspectRatio(
-                  aspectRatio: 2,
+                  aspectRatio: 1.9,
                   child: BarChart(
+                    
                     BarChartData(
+                      // backgroundColor: Colors.amber,
                       gridData: const FlGridData(show: false),
                       groupsSpace: 20,
                       alignment: BarChartAlignment.spaceAround,
@@ -95,7 +98,7 @@ class ExpenseList extends StatelessWidget {
                                     padding: const EdgeInsets.all(8),
                                     child: Icon(
                                       icon,
-                                      size: 16,
+                                      size: 19,
                                       color: categoryIconColors[category] ??
                                           Colors.blue,
                                       
@@ -103,7 +106,6 @@ class ExpenseList extends StatelessWidget {
                                   );
                                 }
                               }
-                              // Return an empty container if there's no icon for the category or out of bounds
                               return const SizedBox();
                             },
                           ),
@@ -173,6 +175,7 @@ class ExpenseList extends StatelessWidget {
                 ),
                 child: ExpenseItem(expenses[index]),
               ),
+        padding: const EdgeInsets.only(bottom: 80),
             ),
           ),
         ],

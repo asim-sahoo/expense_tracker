@@ -2,13 +2,16 @@ import 'package:expense_tracker/models/expense_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:easy_date_timeline/easy_date_timeline.dart';
-// import 'package:expense_tracker/widget/expense.dart';
-
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key, required this.onAddExpense});
+  const NewExpense(
+    this.isDarkMode, {
+    super.key,
+    required this.onAddExpense,
+  });
 
   final void Function(ExpenseModel expense) onAddExpense;
+  final bool isDarkMode;
 
   @override
   State<NewExpense> createState() {
@@ -72,9 +75,6 @@ class _NewExpenseState extends State<NewExpense> {
     super.dispose();
   }
 
-  //   widget.addExpenseCallback(newExpense);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -92,12 +92,18 @@ class _NewExpenseState extends State<NewExpense> {
                 style: GoogleFonts.lato(
                   fontWeight: FontWeight.w900,
                   fontSize: 25,
+                  color: widget.isDarkMode
+                      ? const Color.fromARGB(255, 215, 215, 215)
+                      : Colors.black,
                 ),
               ),
             ],
           ),
           const SizedBox(height: 19),
           Card(
+            color: widget.isDarkMode
+                ? const Color.fromARGB(255, 49, 49, 49)
+                : Colors.white,
             elevation: 0.3,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
@@ -117,22 +123,70 @@ class _NewExpenseState extends State<NewExpense> {
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                     fontFamily: GoogleFonts.lato().fontFamily,
+                    color: widget.isDarkMode
+                        ? const Color.fromARGB(255, 210, 210, 210)
+                        : const Color.fromARGB(255, 0, 0, 0),
                   ),
                   monthStyle: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,
+                      color: widget.isDarkMode
+                          ? const Color.fromARGB(255, 210, 210, 210)
+                          : const Color.fromARGB(255, 0, 0, 0),
                       fontFamily: GoogleFonts.lato().fontFamily),
+
                 ),
                 dayProps: EasyDayProps(
+                  disabledDayStyle: DayStyle(
+                    dayStrStyle: TextStyle(
+                      fontSize: 12,
+                      color: widget.isDarkMode
+                          ?  const Color.fromARGB(255, 90, 90, 90)
+                          : const Color.fromARGB(255, 216, 216, 216),
+                      fontFamily: GoogleFonts.lato().fontFamily,
+                    ),
+                    dayNumStyle: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 24,
+                      color: widget.isDarkMode
+                          ? const Color.fromARGB(255, 90, 90, 90)
+                          : const Color.fromARGB(255, 216, 216, 216),
+                      fontFamily: GoogleFonts.lato().fontFamily,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: widget.isDarkMode ? const Color.fromARGB(255, 90, 90, 90) : const Color.fromARGB(255, 216, 216, 216),
+                        width: 0.5,
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      color: widget.isDarkMode ? const Color.fromARGB(255, 49, 49, 49) : const Color.fromARGB(255, 255, 255, 255),
+                    ),
+                  ),
                   todayStyle: DayStyle(
                     dayStrStyle: TextStyle(
                       fontSize: 12,
+                      color: widget.isDarkMode
+                          ? const Color.fromARGB(255, 210, 210, 210)
+                          : const Color.fromARGB(255, 0, 0, 0),
                       fontFamily: GoogleFonts.lato().fontFamily,
                     ),
                     dayNumStyle: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
+                      color: widget.isDarkMode
+                          ? const Color.fromARGB(255, 210, 210, 210)
+                          : const Color.fromARGB(255, 0, 0, 0),
                       fontFamily: GoogleFonts.lato().fontFamily,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color.fromARGB(255, 130, 153, 255),
+                        width: 0.5,
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      color: widget.isDarkMode
+                          ? const Color.fromARGB(255, 49, 49, 49)
+                          : const Color.fromARGB(255, 248, 248, 248),
                     ),
                   ),
                   height: 60,
@@ -141,12 +195,28 @@ class _NewExpenseState extends State<NewExpense> {
                   inactiveDayStyle: DayStyle(
                     dayStrStyle: TextStyle(
                       fontSize: 12,
+                      color: widget.isDarkMode
+                          ? const Color.fromARGB(255, 210, 210, 210)
+                          : const Color.fromARGB(255, 0, 0, 0),
                       fontFamily: GoogleFonts.lato().fontFamily,
                     ),
                     dayNumStyle: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 24,
+                      color: widget.isDarkMode
+                          ? const Color.fromARGB(255, 210, 210, 210)
+                          : const Color.fromARGB(255, 0, 0, 0),
                       fontFamily: GoogleFonts.lato().fontFamily,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: const Color.fromARGB(255, 142, 142, 142),
+                        width: 0.5,
+                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(12)),
+                      color: widget.isDarkMode
+                          ? const Color.fromARGB(255, 49, 49, 49)
+                          : const Color.fromARGB(255, 248, 248, 248),
                     ),
                   ),
                   activeDayStyle: DayStyle(
@@ -168,7 +238,7 @@ class _NewExpenseState extends State<NewExpense> {
                         ),
                         borderRadius:
                             const BorderRadius.all(Radius.circular(12)),
-                        color: const Color.fromARGB(255, 229, 232, 249)),
+                        color: const Color.fromARGB(255, 210, 210, 210)),
                   ),
                 ),
               ),
@@ -183,7 +253,9 @@ class _NewExpenseState extends State<NewExpense> {
               Text(
                 'Expense Name',
                 style: GoogleFonts.lato(
-                  color: const Color.fromARGB(255, 126, 126, 126),
+                  color: widget.isDarkMode
+                      ? const Color.fromARGB(255, 210, 210, 210)
+                      : const Color.fromARGB(255, 126, 126, 126),
                 ),
               ),
             ],
@@ -198,25 +270,37 @@ class _NewExpenseState extends State<NewExpense> {
                 fontFamily: GoogleFonts.lato().fontFamily,
               ),
               filled: true,
-              fillColor: const Color.fromARGB(255, 248, 248, 248),
+              fillColor: widget.isDarkMode
+                  ? const Color.fromARGB(255, 60, 60, 60)
+                  : const Color.fromARGB(255, 248, 248, 248),
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-              enabledBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(17)),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
                 borderSide: BorderSide(
-                    width: 0.2, color: Color.fromARGB(255, 134, 156, 255)),
+                    width: 0.2,
+                    color: widget.isDarkMode
+                        ? const Color.fromARGB(255, 184, 184, 184)
+                        : const Color.fromARGB(255, 134, 156, 255)),
               ),
-              focusedBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(17)),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(17)),
                 borderSide: BorderSide(
-                    width: 0.35, color: Color.fromARGB(255, 50, 86, 239)),
+                    width: 0.35,
+                    color: widget.isDarkMode
+                        ? const Color.fromARGB(255, 225, 225, 225)
+                        : const Color.fromARGB(255, 50, 86, 239)),
               ),
             ),
             style: GoogleFonts.lato(
-              color: const Color.fromARGB(255, 0, 0, 0),
+              color: widget.isDarkMode
+                  ? const Color.fromARGB(255, 225, 225, 225)
+                  : const Color.fromARGB(255, 0, 0, 0),
               fontWeight: FontWeight.w400,
             ),
-            cursorColor: const Color.fromARGB(255, 50, 86, 239),
+            cursorColor: widget.isDarkMode
+                ? const Color.fromARGB(255, 191, 191, 191)
+                : const Color.fromARGB(255, 0, 0, 0),
             cursorRadius: const Radius.circular(12),
             cursorWidth: 1,
             controller: _titleController,
@@ -230,7 +314,9 @@ class _NewExpenseState extends State<NewExpense> {
               Text(
                 'Amount',
                 style: GoogleFonts.lato(
-                  color: const Color.fromARGB(255, 126, 126, 126),
+                  color: widget.isDarkMode
+                      ? const Color.fromARGB(255, 210, 210, 210)
+                      : const Color.fromARGB(255, 126, 126, 126),
                 ),
               ),
             ],
@@ -253,30 +339,42 @@ class _NewExpenseState extends State<NewExpense> {
                 fontFamily: GoogleFonts.lato().fontFamily,
               ),
               filled: true,
-              fillColor: const Color.fromARGB(255, 248, 248, 248),
+              fillColor: widget.isDarkMode
+                  ? const Color.fromARGB(255, 60, 60, 60)
+                  : const Color.fromARGB(255, 248, 248, 248),
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-              enabledBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(17)),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
                 borderSide: BorderSide(
-                    width: 0.2, color: Color.fromARGB(255, 134, 156, 255)),
+                    width: 0.2,
+                    color: widget.isDarkMode
+                        ? const Color.fromARGB(255, 184, 184, 184)
+                        : const Color.fromARGB(255, 134, 156, 255)),
               ),
               border: const OutlineInputBorder(
                 gapPadding: 2,
                 borderRadius: BorderRadius.all(Radius.circular(17)),
               ),
-              focusedBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                 borderSide: BorderSide(
-                    width: 0.35, color: Color.fromARGB(255, 50, 86, 239)),
+                    width: 0.35,
+                    color: widget.isDarkMode
+                        ? const Color.fromARGB(255, 225, 225, 225)
+                        : const Color.fromARGB(255, 50, 86, 239)),
               ),
               floatingLabelBehavior: FloatingLabelBehavior.always,
             ),
             style: GoogleFonts.lato(
-              color: const Color.fromARGB(255, 0, 0, 0),
+              color: widget.isDarkMode
+                  ? const Color.fromARGB(255, 225, 225, 225)
+                  : const Color.fromARGB(255, 0, 0, 0),
               fontWeight: FontWeight.w400,
             ),
-            cursorColor: const Color.fromARGB(255, 50, 86, 239),
+            cursorColor: widget.isDarkMode
+                ? const Color.fromARGB(255, 191, 191, 191)
+                : const Color.fromARGB(255, 0, 0, 0),
             cursorRadius: const Radius.circular(12),
             cursorWidth: 1,
             controller: _amountController,
@@ -302,7 +400,9 @@ class _NewExpenseState extends State<NewExpense> {
               Text(
                 'Select a Category',
                 style: GoogleFonts.lato(
-                  color: const Color.fromARGB(255, 126, 126, 126),
+                  color: widget.isDarkMode
+                      ? const Color.fromARGB(255, 210, 210, 210)
+                      : const Color.fromARGB(255, 126, 126, 126),
                 ),
               ),
             ],
@@ -363,7 +463,9 @@ class _NewExpenseState extends State<NewExpense> {
               Text(
                 'Select Payment Mode',
                 style: GoogleFonts.lato(
-                  color: const Color.fromARGB(255, 126, 126, 126),
+                  color: widget.isDarkMode
+                      ? const Color.fromARGB(255, 210, 210, 210)
+                      : const Color.fromARGB(255, 126, 126, 126),
                 ),
               ),
             ],

@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:expense_tracker/models/expense_model.dart';
 import 'package:flutter/material.dart';
-// ignore: depend_on_referenced_packages
 import 'package:google_fonts/google_fonts.dart';
 
 class ExpenseItem extends StatelessWidget {

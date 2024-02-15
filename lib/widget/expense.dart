@@ -1,14 +1,15 @@
-import 'package:expense_tracker/widget/expense_list/expense_list.dart';
-import 'package:expense_tracker/models/expense_model.dart';
-import 'package:expense_tracker/widget/new_expense.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/rendering.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+import 'package:expense_tracker/models/expense_model.dart';
+import 'package:expense_tracker/widget/expense_list/expense_list.dart';
+import 'package:expense_tracker/widget/new_expense.dart';
+
 
 class Expenses extends StatefulWidget {
-  const Expenses({super.key});
+  const Expenses({Key? key}) : super(key: key);
 
   @override
   State<Expenses> createState() {
@@ -18,6 +19,7 @@ class Expenses extends StatefulWidget {
 
 class _ExpensesState extends State<Expenses> {
   bool isScrolled = true;
+  bool isDarkMode = false; // Track dark mode state
   final List<ExpenseModel> _registeredExpenses = [];
 
   @override
@@ -58,73 +60,17 @@ class _ExpensesState extends State<Expenses> {
       _saveExpenses();
     });
   }
-  // final List<ExpenseModel> _registeredExpenses = [
-  //   ExpenseModel(
-  //       title: 'Flutter Course',
-  //       amount: 19.99,
-  //       date: DateTime.now(),
-  //       category: Category.work,
-  //       categoryPay: CategoryPay.card),
-  //   ExpenseModel(
-  //       title: 'Hoodie',
-  //       amount: 39.21,
-  //       date: DateTime.now(),
-  //       category: Category.shopping,
-  //       categoryPay: CategoryPay.cash),
-  //   ExpenseModel(
-  //       title: 'Pizza Hut',
-  //       amount: 75.0,
-  //       date: DateTime.now(),
-  //       category: Category.food,
-  //       categoryPay: CategoryPay.cash),
-  //   ExpenseModel(
-  //       title: 'Medicine',
-  //       amount: 100.0,
-  //       date: DateTime.now(),
-  //       category: Category.medical,
-  //       categoryPay: CategoryPay.card),
-  //   ExpenseModel(
-  //       title: 'Flight to Paris',
-  //       amount: 199.99,
-  //       date: DateTime.now(),
-  //       category: Category.travel,
-  //       categoryPay: CategoryPay.card),
-  //   ExpenseModel(
-  //       title: 'New Phone',
-  //       amount: 999.99,
-  //       date: DateTime.now(),
-  //       category: Category.shopping,
-  //       categoryPay: CategoryPay.cash),
-  //   ExpenseModel(
-  //       title: 'Battery Replacement',
-  //       amount: 1999.99,
-  //       date: DateTime.now(),
-  //       category: Category.miscellaneous,
-  //       categoryPay: CategoryPay.card),
-  // ];
 
   void _openAddExpenseOverlay() {
     showModalBottomSheet(
         context: context,
         builder: (ctx) {
-          return NewExpense(onAddExpense: _addExpense);
+          return NewExpense(onAddExpense: _addExpense, isDarkMode);
         },
         isScrollControlled: true,
-        backgroundColor: Colors.white,
+        backgroundColor: isDarkMode ? const Color.fromARGB(255, 29, 29, 29) : Colors.white,
         useSafeArea: true);
   }
-
-  // void _addExpense(ExpenseModel expense) {
-  //   setState(() {
-  //     _registeredExpenses.add(expense);
-  //   });
-  // }
-
-  // void _removeExpense(ExpenseModel expense) {
-  //   setState(() {
-  //     _registeredExpenses.remove(expense);
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -141,61 +87,83 @@ class _ExpensesState extends State<Expenses> {
         }
         return true;
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'ExpenseTracker',
-            style: GoogleFonts.lato(
-              fontWeight: FontWeight.w900,
-              fontSize: 25,
-              color: Colors.white,
+      child: MaterialApp(
+        theme: isDarkMode ? ThemeData.dark() : ThemeData.light(),
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: NestedScrollView(
+            floatHeaderSlivers: true,
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              SliverAppBar(
+                floating: true,
+                snap: true,
+                title: Text(
+                  'ExpenseNest',
+                  style: GoogleFonts.lato(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 26,
+                    color: Colors.white,
+                  ),
+                ),
+                backgroundColor: const Color.fromARGB(255, 50, 86, 239),
+                actions: [
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        isDarkMode = !isDarkMode; // Toggle dark mode
+                      });
+                    },
+                    icon: Icon(
+                      isDarkMode ? Icons.wb_sunny_rounded : Icons.nights_stay_rounded,
+                    ),
+                    color: Colors.white,
+                  )
+                ],
+              )
+            ],
+            body: Column(
+              children: [
+                Expanded(
+                  child: ExpenseList(
+                    expenses: _registeredExpenses,
+                    onRemoveExpense: _removeExpense,
+                  ),
+                ),
+              ],
             ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.sunny),
-              color: Colors.white,
-            )
-          ],
-          backgroundColor: const Color.fromARGB(255, 69, 100, 234),
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: ExpenseList(
-                expenses: _registeredExpenses,
-                onRemoveExpense: _removeExpense,
+          floatingActionButton: AnimatedContainer(
+            duration: const Duration(milliseconds: 250),
+            width: isScrolled ? 90 : 50,
+            height: 50,
+            child: FloatingActionButton.extended(
+              backgroundColor: isDarkMode ? const Color.fromARGB(255, 69, 103, 255) : Colors.white,
+
+              onPressed: _openAddExpenseOverlay,
+              isExtended: isScrolled,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
               ),
-            ),
-          ],
-        ),
-        floatingActionButton: AnimatedContainer(
-          duration: const Duration(milliseconds: 250),
-          width: isScrolled ? 90 : 50,
-          height: 50,
-          child: FloatingActionButton.extended(
-            backgroundColor: const Color.fromARGB(255, 229, 232, 249),
-            onPressed: _openAddExpenseOverlay,
-            isExtended: isScrolled,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            label: const Text(
-              'Add',
-              style: TextStyle(
-                color: Color.fromARGB(255, 50, 86, 239),
+              label: Text(
+                'Add',
+                style: TextStyle(
+                  color: isDarkMode ? Colors.white : const Color.fromARGB(255, 50, 86, 239),
+                ),
               ),
-            ),
-            icon: const Icon(
-              Icons.add,
-              color: Color.fromARGB(255, 50, 86, 239),
+              icon: Icon(
+                Icons.add,
+                  color: isDarkMode ? Colors.white : const Color.fromARGB(255, 50, 86, 239),
+              ),
             ),
           ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.endFloat,
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
     );
   }
 }
 
+// void main() {
+//   runApp(Expenses());
+// }
