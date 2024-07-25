@@ -134,14 +134,13 @@ class _NewExpenseState extends State<NewExpense> {
                           ? const Color.fromARGB(255, 210, 210, 210)
                           : const Color.fromARGB(255, 0, 0, 0),
                       fontFamily: GoogleFonts.lato().fontFamily),
-
                 ),
                 dayProps: EasyDayProps(
                   disabledDayStyle: DayStyle(
                     dayStrStyle: TextStyle(
                       fontSize: 12,
                       color: widget.isDarkMode
-                          ?  const Color.fromARGB(255, 90, 90, 90)
+                          ? const Color.fromARGB(255, 90, 90, 90)
                           : const Color.fromARGB(255, 216, 216, 216),
                       fontFamily: GoogleFonts.lato().fontFamily,
                     ),
@@ -155,11 +154,15 @@ class _NewExpenseState extends State<NewExpense> {
                     ),
                     decoration: BoxDecoration(
                       border: Border.all(
-                        color: widget.isDarkMode ? const Color.fromARGB(255, 90, 90, 90) : const Color.fromARGB(255, 216, 216, 216),
+                        color: widget.isDarkMode
+                            ? const Color.fromARGB(255, 90, 90, 90)
+                            : const Color.fromARGB(255, 216, 216, 216),
                         width: 0.5,
                       ),
                       borderRadius: const BorderRadius.all(Radius.circular(12)),
-                      color: widget.isDarkMode ? const Color.fromARGB(255, 49, 49, 49) : const Color.fromARGB(255, 255, 255, 255),
+                      color: widget.isDarkMode
+                          ? const Color.fromARGB(255, 49, 49, 49)
+                          : const Color.fromARGB(255, 255, 255, 255),
                     ),
                   ),
                   todayStyle: DayStyle(

@@ -163,7 +163,3 @@ class _ExpensesState extends State<Expenses> {
     );
   }
 }
-
-// void main() {
-//   runApp(Expenses());
-// }
